@@ -21,29 +21,29 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
-        var user = await _userService.GetByIdAsync(id);
-        return user is null ? NotFound() : Ok(user);
+        var res = await _userService.GetByIdAsync(id);
+        return res is null ? NotFound() : Ok(res);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(UserDto userDto)
     {
-        await _userService.AddAsync(userDto);
-        return Ok();
+        var res = await _userService.AddAsync(userDto);
+        return Ok(res);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, UserDto userDto)
     {
         userDto.Id = id;
-        await _userService.UpdateAsync(userDto);
-        return Ok();
+        var res = await _userService.UpdateAsync(userDto);
+        return Ok(res);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        await _userService.DeleteAsync(id);
-        return Ok();
+        var res = await _userService.DeleteAsync(id);
+        return Ok(res);
     }
 }
