@@ -1,8 +1,16 @@
 <Project>
-	<ItemGroup>
-		<PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
-		<PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
-		<PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-		<PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <!--LingoClub.Tests-->
+    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageVersion Include="xunit" Version="2.9.2" />
+    <PackageVersion Include="xUnit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
+	<PackageVersion Include="FluentAssertions" Version="8.2.0" />
+	<PackageVersion Include="Moq" Version="4.20.72" />
+  </ItemGroup>
 </Project>
