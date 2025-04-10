@@ -1,8 +1,10 @@
 ﻿# Clean Architecture
-[ Web.Api ]
-    ↓
-[ Application ]      [ Infrastructure ]
-         ↓                 ↓
-     [ Domain ]       (also depends on Domain)
+| Project | References |
+| ------- | ------------------------------- |
+|Web.Api|Application, Infrastructure, Shared|
+|Application|Domain, Shared|
+|Infrastructure|Domain, Shared|
+|Domain|(No references)|
+|Shared|(No references)|
 
 -------------------------------------------------
