@@ -2,7 +2,7 @@
 using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
-using SharedKernel;
+using Shared;
 
 namespace Application.Services;
 

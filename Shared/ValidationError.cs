@@ -1,4 +1,4 @@
-﻿namespace SharedKernel;
+﻿namespace Shared;
 
 public sealed record ValidationError : Error
 {

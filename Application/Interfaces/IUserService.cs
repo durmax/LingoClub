@@ -1,5 +1,5 @@
 ﻿using Application.DTOs;
-using SharedKernel;
+using Shared;
 
 namespace Application.Interfaces
 {
