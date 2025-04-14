@@ -4,11 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class AppDbContext : DbContext, IAppDbContext
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options) { }
-
         public DbSet<User> Users { get; set; }  // from Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

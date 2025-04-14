@@ -30,7 +30,7 @@ namespace LingoClub.Tests.User
             _context.Setup(r => r.Users.FindAsync(userId)).ReturnsAsync(expectedUser);
 
             // Act
-            Result<UserDto> result = (Result<UserDto>)await _userService.GetByIdAsync(userId);
+            Result<UserDto> result = await _userService.GetByIdAsync(userId);
 
             // Assert
             result.Value.Should().BeEquivalentTo(expectedUser);

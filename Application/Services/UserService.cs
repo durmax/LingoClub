@@ -8,7 +8,6 @@ namespace Application.Services;
 
 public class UserService(IAppDbContext context): IUserService
 {
-
     public async Task<Result> GetAllAsync()
     {
         var users = await context.Users.ToListAsync();
