@@ -1,8 +1,8 @@
 ﻿using Application.Interfaces;
 using Application.Services;
-using Domain.Interfaces;
 using Moq;
 using FluentAssertions;
+using Domain.Users;
 
 namespace LingoClub.Tests.User
 {
@@ -22,7 +22,7 @@ namespace LingoClub.Tests.User
         {
             // Arrange
             var userId = Guid.Parse("1ef571ba-4263-45e1-972f-fc5bed01cb37");
-            var expectedUser = new Domain.Entities.User { Id = userId, FullName = "John Doe" };
+            var expectedUser = new Domain.Users.User { Id = userId, FullName = "John Doe" };
             _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync(expectedUser);
 
             // Act
@@ -36,10 +36,10 @@ namespace LingoClub.Tests.User
         public async Task GetAllAsync_ReturnsUsers_WhenUsersExist()
         {
             // Arrange
-            var users = new List<Domain.Entities.User>
+            var users = new List<Domain.Users.User>
         {
-            new Domain.Entities.User { Id = Guid.Parse("1ef571ba-4263-45e1-972f-fc5bed01cb37"), FullName = "John Doe" },
-            new Domain.Entities.User { Id = Guid.Parse("2ef571ba-4263-45e1-972f-fc5bed01cb37"), FullName = "Jane Smith" }
+            new Domain.Users.User { Id = Guid.Parse("1ef571ba-4263-45e1-972f-fc5bed01cb37"), FullName = "John Doe" },
+            new Domain.Users.User { Id = Guid.Parse("2ef571ba-4263-45e1-972f-fc5bed01cb37"), FullName = "Jane Smith" }
         };
             _userRepositoryMock.Setup(r => r.GetAllAsync()).ReturnsAsync(users);
 

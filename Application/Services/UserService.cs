@@ -1,7 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
-using Domain.Entities;
-using Domain.Interfaces;
+using Domain.Users;
 using Shared;
 
 namespace Application.Services;
@@ -15,17 +14,17 @@ public class UserService : IUserService
         _repository = repository;
     }
 
-    public async Task<Result<IEnumerable<UserDto>>> GetAllAsync()
+    public async Task<Result> GetAllAsync()
     {
         var users = await _repository.GetAllAsync();
-        var dtos= users.Select(u => new UserDto { Id = u.Id, FullName = u.FullName, Email = u.Email });
+        var dtos = users.Select(u => new UserDto { Id = u.Id, FullName = u.FullName, Email = u.Email }).ToList();
         return Result.Success(dtos);
     }
 
-    public async Task<Result<UserDto?>> GetByIdAsync(Guid id)
+    public async Task<Result> GetByIdAsync(Guid id)
     {
         var user = await _repository.GetByIdAsync(id);
-        if (user == null) return null;
+        if (user == null) return Result.Failure(UserErrors.NotFound(id));
 
         var dto = new UserDto { Id = user.Id, FullName = user.FullName, Email = user.Email };
         return Result.Success(dto);

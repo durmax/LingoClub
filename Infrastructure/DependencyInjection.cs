@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Users;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

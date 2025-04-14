@@ -16,13 +16,17 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll() => Ok(await _userService.GetAllAsync());
+    public async Task<IActionResult> GetAll()
+    {
+        var res = await _userService.GetAllAsync();
+        return Ok(res);
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
         var res = await _userService.GetByIdAsync(id);
-        return res is null ? NotFound() : Ok(res);
+        return res.IsFailure ? NotFound(res) : Ok(res);
     }
 
     [HttpPost]
