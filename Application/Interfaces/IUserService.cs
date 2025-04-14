@@ -6,7 +6,7 @@ namespace Application.Interfaces
 {
     public interface IUserService
     {
-        Task<Result> GetAllAsync();
+        Task<Result<IEnumerable<UserDto>>> GetAllAsync();
         Task<Result<UserDto>> GetByIdAsync(Guid id);
         Task<Result> AddAsync(UserDto userDto);
         Task<Result> UpdateAsync(UserDto userDto);

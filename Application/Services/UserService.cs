@@ -8,11 +8,11 @@ namespace Application.Services;
 
 public class UserService(IAppDbContext context): IUserService
 {
-    public async Task<Result> GetAllAsync()
+    public async Task<Result<IEnumerable<UserDto>>> GetAllAsync()
     {
         var users = await context.Users.ToListAsync();
         var dtos = users.Select(u => new UserDto { Id = u.Id, FullName = u.FullName, Email = u.Email }).ToList();
-        return Result.Success(dtos);
+        return Result.Success<IEnumerable<UserDto>>(dtos);
     }
 
     public async Task<Result<UserDto>> GetByIdAsync(Guid id)
