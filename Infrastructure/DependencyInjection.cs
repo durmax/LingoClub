@@ -1,4 +1,5 @@
-﻿using Domain.Users;
+﻿using Application.Interfaces;
+using Domain.Users;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +14,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
-        services.AddScoped<IUserRepository, UserRepository>();
+        //services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAppDbContext, AppDbContext>();
 
         return services;
     }

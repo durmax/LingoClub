@@ -1,30 +1,25 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
 using Domain.Users;
+using Microsoft.EntityFrameworkCore;
 using Shared;
 
 namespace Application.Services;
 
-public class UserService : IUserService
+public class UserService(IAppDbContext context): IUserService
 {
-    private readonly IUserRepository _repository;
-
-    public UserService(IUserRepository repository)
-    {
-        _repository = repository;
-    }
 
     public async Task<Result> GetAllAsync()
     {
-        var users = await _repository.GetAllAsync();
+        var users = await context.Users.ToListAsync();
         var dtos = users.Select(u => new UserDto { Id = u.Id, FullName = u.FullName, Email = u.Email }).ToList();
         return Result.Success(dtos);
     }
 
-    public async Task<Result> GetByIdAsync(Guid id)
+    public async Task<Result<UserDto>> GetByIdAsync(Guid id)
     {
-        var user = await _repository.GetByIdAsync(id);
-        if (user == null) return Result.Failure(UserErrors.NotFound(id));
+        var user = await context.Users.FindAsync(id);
+        if (user == null) return Result.Failure<UserDto>(UserErrors.NotFound(id));
 
         var dto = new UserDto { Id = user.Id, FullName = user.FullName, Email = user.Email };
         return Result.Success(dto);
@@ -33,20 +28,24 @@ public class UserService : IUserService
     public async Task<Result> AddAsync(UserDto userDto)
     {
         var user = new User { Id = Guid.NewGuid(), FullName = userDto.FullName, Email = userDto.Email };
-        await _repository.AddAsync(user);
+        await context.Users.AddAsync(user);
+        await context.SaveChangesAsync();
         return Result.Success();
     }
 
     public async Task<Result> UpdateAsync(UserDto userDto)
     {
         var user = new User { Id = userDto.Id, FullName = userDto.FullName, Email = userDto.Email };
-        await _repository.UpdateAsync(user);
+        context.Users.Update(user);
+        await context.SaveChangesAsync();
         return Result.Success();
     }
 
-    public async Task<Result> DeleteAsync(Guid id)
+    public async Task<Result> DeleteAsync(UserDto userDto)
     {
-        await _repository.DeleteAsync(id);
+        var user = new User { Id = userDto.Id, FullName = userDto.FullName, Email = userDto.Email };
+        context.Users.Remove(user);
+        await context.SaveChangesAsync();
         return Result.Success();
     }
 }
