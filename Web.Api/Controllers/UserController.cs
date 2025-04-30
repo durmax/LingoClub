@@ -16,10 +16,24 @@ public class UserController(IUserService userService) : ControllerBase
         return Ok(res);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("UserId/{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
-        var res = await userService.GetByIdAsync(id);
+        var res = await userService.GetAsync(id);
+        return res.IsFailure ? NotFound(res) : Ok(res);
+    }
+
+    [HttpGet("UserEMail/{email}")]
+    public async Task<IActionResult> Get(string email)
+    {
+        var res = await userService.GetAsync(email);
+        return res.IsFailure ? NotFound(res) : Ok(res);
+    }
+
+    [HttpGet("UserName/{name}")]
+    public async Task<IActionResult> GetByName(string name)
+    {
+        var res = await userService.GetByNameAsync(name);
         return res.IsFailure ? NotFound(res) : Ok(res);
     }
 

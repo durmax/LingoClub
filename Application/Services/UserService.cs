@@ -15,13 +15,33 @@ public class UserService(IAppDbContext context): IUserService
         return Result.Success<IEnumerable<UserDto>>(dtos);
     }
 
-    public async Task<Result<UserDto>> GetByIdAsync(Guid id)
+    public async Task<Result<UserDto>> GetAsync(Guid id)
     {
         var user = await context.Users.FindAsync(id);
         if (user == null) return Result.Failure<UserDto>(UserErrors.NotFound(id));
 
         var dto = new UserDto { Id = user.Id, FullName = user.FullName, Email = user.Email };
         return Result.Success(dto);
+    }
+    public async Task<Result<UserDto>> GetAsync(string email)
+    {
+        var user = context.Users.FirstOrDefault(u => u.Email == email);
+        if (user == null) return Result.Failure<UserDto>(UserErrors.NotFound(email));
+
+        var dto = new UserDto { Id = user.Id, FullName = user.FullName, Email = user.Email };
+        return Result.Success(dto);
+    }
+    public async Task<Result<List<UserDto>>> GetByNameAsync(string name)
+    {
+        var users = context.Users.Where(u => u.FullName.ToLower().Contains(name.ToLower()));
+        if (users.Count() == 0) return Result.Failure<List<UserDto>>(UserErrors.NotFound(name));
+        
+        var result = new List<UserDto>();
+        foreach (var user in users)
+        {
+            result.Add( new UserDto { Id = user.Id, FullName = user.FullName, Email = user.Email });
+        }
+        return Result.Success(result);
     }
 
     public async Task<Result> AddAsync(UserDto userDto)

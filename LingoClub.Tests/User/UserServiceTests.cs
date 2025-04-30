@@ -45,7 +45,7 @@ namespace LingoClub.Tests.User
             var userId = Guid.Parse("1ef571ba-4263-45e1-972f-fc5bed01cb37");
 
             // Act
-            Result<UserDto> result = await _userService.GetByIdAsync(userId);
+            Result<UserDto> result = await _userService.GetAsync(userId);
 
             // Assert
             result.Value.FullName.Should().BeEquivalentTo("John Doe");

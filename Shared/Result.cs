@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Shared;
+﻿namespace Shared;
 
 public class Result
 {
@@ -37,10 +35,7 @@ public class Result<TValue> : Result
         _value = value;
     }
 
-    [NotNull]
-    public TValue Value => IsSuccess
-        ? _value!
-        : throw new InvalidOperationException("The value of a failure result can't be accessed.");
+    public TValue? Value => _value;
 
     public static implicit operator Result<TValue>(TValue? value) =>
         value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
